@@ -5,7 +5,7 @@ Minecraft Discord RPC allows people to display their Minecraft status or any Min
 
 - Is this safe?
 > Yes 100%, This will not steal any of your Microsoft Account info and you can check the code yourself!
-- It's not displaying the wrong info!
+- It's displaying the wrong game info!
 > You need to change the **Gamertag** in the **config.json** file, but if you did report the issue!
 
 Requirements:
