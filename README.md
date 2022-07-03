@@ -1,4 +1,3 @@
-![image](https://user-images.githubusercontent.com/97450182/167457908-07be1a60-7e86-4bef-b7f0-6bd19efd8b24.png)
 # Minecraft Discord RPC
 Minecraft Discord RPC allows people to display their Minecraft status or any Minecraft Game they are playing as a Discord RPC
 
@@ -15,7 +14,12 @@ Requirements:
 
 Screenshots:
 -
-![Screenshot_20220508_133916](https://user-images.githubusercontent.com/97450182/167292656-1679e007-4701-4a3c-89ee-2104b5eb12cd.png)
+![MC_in_World_or_Server](https://raw.githubusercontent.com/xKingDark/Minecraft-Discord-RPC/main/imgs/mc_world_or_server.png)
+![MC_in_Realm](https://raw.githubusercontent.com/xKingDark/Minecraft-Discord-RPC/main/imgs/mc_realms.png)
+![MC_Preview](https://raw.githubusercontent.com/xKingDark/Minecraft-Discord-RPC/main/imgs/mc_preview.png)
+![MC_in_World_or_Server](https://raw.githubusercontent.com/xKingDark/Minecraft-Discord-RPC/main/imgs/mc_console.png)
+![MC_in_World_or_Server](https://raw.githubusercontent.com/xKingDark/Minecraft-Discord-RPC/main/imgs/mc_dungeons.png)
+![MC_in_World_or_Server](https://raw.githubusercontent.com/xKingDark/Minecraft-Discord-RPC/main/imgs/mc_launcher.png)
 
 Notes:
 -
