@@ -2,7 +2,7 @@
 Minecraft Discord RPC allows people to display their Minecraft status or any Minecraft Game they are playing as a Discord RPC
 
 **Questions:**
-
+-
 - Is this safe?
 > Yes 100%, This will not steal any of your Microsoft Account info and you can check the code yourself!
 - It's displaying the wrong game info!
