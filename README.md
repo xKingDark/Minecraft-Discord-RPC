@@ -1,12 +1,18 @@
 # Minecraft Discord RPC
 Minecraft Discord RPC allows people to display their Minecraft status or any Minecraft Game they are playing as a Discord RPC
 
-**Questions:**
+Questions:
 -
 - Is this safe?
 > Yes 100%, This will not steal any of your Microsoft Account info and you can check the code yourself!
 - It's displaying the wrong game info!
 > You need to change the **Gamertag** in the **config.json** file, but if you did report the issue!
+
+How to run:
+-
+1. Copy the files you installed into a folder!
+2. Open a Command Prompt or a Terminal and run `npm i` to install all the packages that are required!
+3. Once all the packages are installed change the **Gamertag** in **config.json** to your gamertag and run `node index.js` and follow what the console says to sign in into your Microsoft Account!
 
 Requirements:
 -
