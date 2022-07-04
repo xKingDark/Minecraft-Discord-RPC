@@ -1,4 +1,4 @@
-const client = new (require("discord-rpc")).Client({ transport: 'ipc' })
+const RPC = new (require("discord-rpc")).Client({ transport: 'ipc' })
 const axios = require('axios');
 const { Game } = require('./modules/rpc.js');
 
@@ -9,7 +9,7 @@ flow = new (require('prismarine-auth')).Authflow('', `\auth`, { relyingParty: 'h
     token = `XBL3.0 x=${xbl.userHash};${xbl.XSTSToken}`;
 });
 
-client.on('ready', () => {
+RPC.on('ready', () => {
 	console.log("\x1B[33m\x1B[1mINFO | The system is starting, please wait! \x1B[37m \n")
 	const tokenCheck = setInterval(async () => {
 		if(token) {
@@ -35,39 +35,25 @@ client.on('ready', () => {
 								const gameInfoFunc = await new Game(title, xuid, device, title.activity?.richPresence, token).getGameInfo();
 								if(gameInfoFunc.canceled || gameInfoFunc == true) return;
 								
-								client.request('SET_ACTIVITY', {
-									pid: process.pid,
-									activity: {
-										details: gameInfoFunc.details,
-										state: gameInfoFunc.state,
-										timestamps: {
-											start: time
-										},
-										assets: {
-											large_image: gameInfoFunc.largeImg,
-											large_text: gameInfoFunc.largeText,
-											small_image: gameInfoFunc.smallImg,
-											small_text: gameInfoFunc.smallText
-										}
-									}
-								})
-							})
-						})
+								RPC.setActivity({
+									details: gameInfoFunc.details,
+									state: gameInfoFunc.state,
+									startTimestamp: time,
+									largeImageKey: gameInfoFunc.largeImg,
+									largeImageText: gameInfoFunc.largeText,
+									smallImageKey: gameInfoFunc.smallImg,
+									smallImageText: gameInfoFunc.smallText,
+								});
+							});
+						});
 					} else {
 						if(lastStatus != info.data.state) { lastStatus = info.data.state; time = new Date().getTime(); console.log("\x1B[33m\x1B[1mINFO | \x1B[37mState Changed to: \x1B[31m" + info.data.state + "\x1B[37m"); }
-						client.request('SET_ACTIVITY', {
-							pid: process.pid,
-							activity: {
-								state: "Player is Offline",
-								timestamps: {
-									start: time
-								},
-								assets: {
-									large_image: "mclogo",
-									large_text: "Currently Offline!"
-								}
-							}
-						})
+						RPC.setActivity({
+							state: "Player is Offline",
+							startTimestamp: time,
+							largeImageKey: "mclogo",
+							largeImageText: "Currently Offline!",
+						});
 					}
 				}
 			}, 5000);
@@ -75,4 +61,4 @@ client.on('ready', () => {
 	})
 });
 
-client.login({ clientId : "993228409129943171" }).catch(console.error);
+RPC.login({ clientId : "993228409129943171" }).catch(console.error);
