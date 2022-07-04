@@ -31,6 +31,15 @@ class Game {
 			})
 		}
 		
+		//Minecraft for Windows: 896928775
+		//Minecraft Preview for Windows: 1904044383
+		//Minecraft for Android: 1739947436
+		//Minecraft for iOS: 1810924247
+		//Minecraft Console: 1828326430
+		//Minecraft for PlayStation: 2044456598
+		//Minecraft Dungeons: 1739375565
+		//Minecraft Launcher: 1794566092
+		
 		if(this.title.id == 896928775) {
 			if(this.activity && this.activity.startsWith("Playing in")) {
 				this.largeImg = "mclogo";
