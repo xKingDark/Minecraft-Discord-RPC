@@ -20,7 +20,6 @@ class Game {
 	}
 	
 	async getGameInfo() {
-		console.log(this.activity)
 		const res = await axios.get(`https://titlehub.xboxlive.com/users/xuid(` + this.xuid + `)/titles/titlehistory/decoration/scid,image,detail`, { headers:{ 'x-xbl-contract-version': '2', 'Authorization': this.token, "Accept-Language": "en-US" }}).catch(e => {});
 		
 		if(res) {
