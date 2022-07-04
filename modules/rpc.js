@@ -1,92 +1,87 @@
 const axios = require('axios');
 
 class Game {
-    constructor() {}
-	
-    async getGameInfo(title, xuid, device, activity, token) {
-		const res = await axios.get(`https://titlehub.xboxlive.com/users/xuid(` + xuid + `)/titles/titlehistory/decoration/scid,image,detail`, { headers:{ 'x-xbl-contract-version': '2', 'Authorization': token, "Accept-Language": "en-US" }}).catch(e => {});
-	
-		var state = activity;
-		var details;
+	constructor(title, xuid, device, activity, token) {
+		this.title = title;
+		this.xuid = xuid;
+		this.device = device;
+		this.activity = activity;
+		this.token = token;
 		
-		var largeImg;
-		var largeText;
-		var smallImg;
-		var smallText;
+		this.state = activity;
+		this.details;
 		
-		var canceled = false;
+		this.largeImg;
+		this.largeText
+		this.smallImg;
+		this.smallText;
+		
+		this.canceled = false;
+	}
+	
+	async getGameInfo() {
+		const res = await axios.get(`https://titlehub.xboxlive.com/users/xuid(` + this.xuid + `)/titles/titlehistory/decoration/scid,image,detail`, { headers:{ 'x-xbl-contract-version': '2', 'Authorization': this.token, "Accept-Language": "en-US" }}).catch(e => {});
 		
 		if(res) {
-			res.data.titles.forEach(ttitle => {
-				if(ttitle.titleId == title.id) {
-					details = ttitle.name;
+			res.data.titles.forEach(title => {
+				if(title.titleId == this.title.id) {
+					this.details = title.name;
 				}
 			})
 		}
 		
-		if(title.name.includes("Minecraft") && details != "Minecraft" && !title.name.includes("Minecraft Launcher") && !title.name.includes("Minecraft Windows Preview") && !title.name.includes("Minecraft Dungeons")) {
-			if(activity && activity.startsWith("Playing in")) {
-				largeImg = "mclogo";
-				largeText = details;
-				smallImg = "mcpreview";
-				smallText = "Currently Playing";
-			} else if(activity && activity.startsWith("Playing on")) {
-				largeImg = "mclogo";
-				largeText = details;
-				smallImg = "netherportal";
-				smallText = "Currently Playing on Minecraft Realms";
+		if(this.title.name.includes("Minecraft") && this.details != "Minecraft" && !this.title.name.includes("Minecraft Launcher") && !this.title.name.includes("Minecraft Windows Preview") && !this.title.name.includes("Minecraft Dungeons")) {
+			if(this.activity && this.activity.startsWith("Playing in")) {
+				this.largeImg = "mclogo";
+				this.largeText = this.details;
+				this.smallImg = "mcpreview";
+				this.smallText = "Currently Playing";
+			} else if(this.activity && this.activity.startsWith("Playing on")) {
+				this.largeImg = "mclogo";
+				this.largeText = this.details;
+				this.smallImg = "netherportal";
+				this.smallText = "Currently Playing on Minecraft Realms";
 			} else {
-				largeImg = "mclogo";
-				largeText = details;
+				this.largeImg = "mclogo";
+				this.largeText = this.details;
 			}
-		} else if(title.name.includes("Minecraft") && details == "Minecraft" && !title.name.includes("Minecraft Launcher") && !title.name.includes("Minecraft Windows Preview")) {
-			if(activity && activity.startsWith("Playing in")) {
-				largeImg = "mcxboxlogo";
-				largeText = details;
-				smallImg = "mcpreview";
-				smallText = "Currently Playing";
-			} else if(activity && activity.startsWith("Playing on")) {
-				largeImg = "mcxboxlogo";
-				largeText = details;
-				smallImg = "netherportal";
-				smallText = "Currently Playing on Minecraft Realms";
+		} else if(this.title.name.includes("Minecraft") && this.details == "Minecraft" && !this.title.name.includes("Minecraft Launcher") && !this.title.name.includes("Minecraft Windows Preview")) {
+			this.largeImg = "mcxboxlogo";
+			this.largeText = this.details;
+			this.state = undefined;
+		} else if(this.title.name.includes("Minecraft Launcher")) {
+			this.largeImg = "mclauncherlogo";
+			this.largeText = this.details;
+			this.state = undefined;
+		} else if(this.title.name.includes("Minecraft Dungeons")) {
+			this.largeImg = "mcdungeonslogo";
+			this.largeText = this.details;
+			this.state = undefined;
+		} else if(this.title.name.includes("Minecraft") && this.title.name.includes("Minecraft Windows Preview")) {
+			if(this.activity && this.activity.startsWith("Playing in")) {
+				this.largeImg = "mcpreviewlogo";
+				this.largeText = this.details;
+				this.smallImg = "mcpreview";
+				this.smallText = "Currently Playing";
+			} else if(this.activity && this.activity.startsWith("Playing on")) {
+				this.largeImg = "mcpreviewlogo";
+				this.largeText = this.details;
+				this.smallImg = "netherportal";
+				this.smallText = "Currently Playing on Minecraft Realms";
 			} else {
-				largeImg = "mcxboxlogo";
-				largeText = details;
-			}
-		} else if(title.name.includes("Minecraft Launcher")) {
-			largeImg = "mclauncherlogo";
-			largeText = details;
-			state = undefined;
-		} else if(title.name.includes("Minecraft Dungeons")) {
-			largeImg = "mcdungeonslogo";
-			largeText = details;
-			state = undefined;
-		} else if(title.name.includes("Minecraft") && title.name.includes("Minecraft Windows Preview")) {
-			if(activity && activity.startsWith("Playing in")) {
-				largeImg = "mcpreviewlogo";
-				largeText = details;
-				smallImg = "mcpreview";
-				smallText = "Currently Playing";
-			} else if(activity && activity.startsWith("Playing on")) {
-				largeImg = "mcpreviewlogo";
-				largeText = details;
-				smallImg = "netherportal";
-				smallText = "Currently Playing on Minecraft Realms";
-			} else {
-				largeImg = "mcpreviewlogo";
-				largeText = details;
+				this.largeImg = "mcpreviewlogo";
+				this.largeText = this.details;
 			}
 		} else {
-			if(JSON.stringify(device.titles.filter(t => t.name.startsWith("Minecraft"))) != "[]") return canceled = true;
+			if(JSON.stringify(this.device.titles.filter(title => title.name.startsWith("Minecraft"))) != "[]") return this.canceled = true;
 			
-			state = "Player is online and is not playing!";
-			largeImg = "mclogo";
-			largeText = "Currently not playing!";
+			this.state = "Player is online and is not playing!";
+			this.largeImg = "mclogo";
+			this.largeText = "Currently not playing!";
 		}
 		
-		return { canceled: canceled, state: state, details: details, largeImg: largeImg, largeText: largeText, smallImg: smallImg, smallText: smallText };
-    }
+		return { canceled: this.canceled, state: this.state, details: this.details, largeImg: this.largeImg, largeText: this.largeText, smallImg: this.smallImg, smallText: this.smallText };
+	}
 }
 
 module.exports = { Game };
