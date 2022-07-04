@@ -20,6 +20,7 @@ class Game {
 	}
 	
 	async getGameInfo() {
+		const allowedTitles = ["896928775", "1904044383", "1739947436", "1810924247", "1828326430", "2044456598", "1739375565", "1794566092"];
 		const res = await axios.get(`https://titlehub.xboxlive.com/users/xuid(` + this.xuid + `)/titles/titlehistory/decoration/scid,image,detail`, { headers:{ 'x-xbl-contract-version': '2', 'Authorization': this.token, "Accept-Language": "en-US" }}).catch(e => {});
 		
 		if(res) {
@@ -30,7 +31,7 @@ class Game {
 			})
 		}
 		
-		if(this.title.name.includes("Minecraft") && this.details != "Minecraft" && !this.title.name.includes("Minecraft Launcher") && !this.title.name.includes("Minecraft Windows Preview") && !this.title.name.includes("Minecraft Dungeons")) {
+		if(this.title.id == 896928775) {
 			if(this.activity && this.activity.startsWith("Playing in")) {
 				this.largeImg = "mclogo";
 				this.largeText = this.details;
@@ -45,19 +46,34 @@ class Game {
 				this.largeImg = "mclogo";
 				this.largeText = this.details;
 			}
-		} else if(this.title.name.includes("Minecraft") && this.details == "Minecraft") {
-			this.largeImg = "mcxboxlogo";
+		} else if(this.title.id == 1739947436 || this.title.id == 1810924247) {
+			this.largeImg = "mc";
 			this.largeText = this.details;
 			this.state = undefined;
-		} else if(this.title.name.includes("Minecraft Launcher")) {
+		} else if(this.title.id == 1828326430) {
+			if(this.activity && this.activity.startsWith("Playing in")) {
+				this.largeImg = "mcxboxlogo";
+				this.largeText = this.details;
+				this.smallImg = "mcpreview";
+				this.smallText = "Currently Playing";
+			} else if(this.activity && this.activity.startsWith("Playing on")) {
+				this.largeImg = "mcxboxlogo";
+				this.largeText = this.details;
+				this.smallImg = "netherportal";
+				this.smallText = "Currently Playing on Minecraft Realms";
+			} else {
+				this.largeImg = "mcxboxlogo";
+				this.largeText = this.details;
+			}
+		} else if(this.title.id == 1794566092) {
 			this.largeImg = "mclauncherlogo";
 			this.largeText = this.details;
 			this.state = undefined;
-		} else if(this.title.name.includes("Minecraft Dungeons")) {
+		} else if(this.title.id == 1739375565) {
 			this.largeImg = "mcdungeonslogo";
 			this.largeText = this.details;
 			this.state = undefined;
-		} else if(this.title.name.includes("Minecraft Windows Preview")) {
+		} else if(this.title.id == 1904044383) {
 			if(this.activity && this.activity.startsWith("Playing in")) {
 				this.largeImg = "mcpreviewlogo";
 				this.largeText = this.details;
@@ -73,7 +89,7 @@ class Game {
 				this.largeText = this.details;
 			}
 		} else {
-			if(this.device.titles.filter(title => title.name.startsWith("Minecraft")).length != 0) return this.canceled = true;
+			if(this.device.titles.filter(title => allowedTitles.includes(title.id)).length != 0) return this.canceled = true;
 			
 			this.state = "Player is online and is not playing!";
 			this.largeImg = "mclogo";
