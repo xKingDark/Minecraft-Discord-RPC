@@ -19,7 +19,7 @@ client.on('ready', () => {
 		if(token) {
 			clearInterval(tokenCheck);
 			const userInfo = await axios({ method: "GET", url: "https://profile.xboxlive.com/users/gt(" + gamertag + ")/profile/settings", headers:{ 'x-xbl-contract-version': '2', 'Authorization': token, "Accept-Language": "en-US" }}).catch(e => {});
-			let xuid = userInfo.data.profileUsers[0].id;
+			const xuid = userInfo.data.profileUsers[0].id;
 			
 			let lastStatus;
 			let lastGame;
