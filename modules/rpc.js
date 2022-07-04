@@ -5,10 +5,10 @@ class Game {
 		this.title = title;
 		this.xuid = xuid;
 		this.device = device;
-		this.activity = activity;
+		this.activity = activity ?? "Loading the activity!";
 		this.token = token;
 		
-		this.state = activity;
+		this.state = this.activity;
 		this.details;
 		
 		this.largeImg;
@@ -20,6 +20,7 @@ class Game {
 	}
 	
 	async getGameInfo() {
+		console.log(this.activity)
 		const res = await axios.get(`https://titlehub.xboxlive.com/users/xuid(` + this.xuid + `)/titles/titlehistory/decoration/scid,image,detail`, { headers:{ 'x-xbl-contract-version': '2', 'Authorization': this.token, "Accept-Language": "en-US" }}).catch(e => {});
 		
 		if(res) {
@@ -45,7 +46,7 @@ class Game {
 				this.largeImg = "mclogo";
 				this.largeText = this.details;
 			}
-		} else if(this.title.name.includes("Minecraft") && this.details == "Minecraft" && !this.title.name.includes("Minecraft Launcher") && !this.title.name.includes("Minecraft Windows Preview")) {
+		} else if(this.title.name.includes("Minecraft") && this.details == "Minecraft") {
 			this.largeImg = "mcxboxlogo";
 			this.largeText = this.details;
 			this.state = undefined;
@@ -57,7 +58,7 @@ class Game {
 			this.largeImg = "mcdungeonslogo";
 			this.largeText = this.details;
 			this.state = undefined;
-		} else if(this.title.name.includes("Minecraft") && this.title.name.includes("Minecraft Windows Preview")) {
+		} else if(this.title.name.includes("Minecraft Windows Preview")) {
 			if(this.activity && this.activity.startsWith("Playing in")) {
 				this.largeImg = "mcpreviewlogo";
 				this.largeText = this.details;
@@ -73,7 +74,7 @@ class Game {
 				this.largeText = this.details;
 			}
 		} else {
-			if(JSON.stringify(this.device.titles.filter(title => title.name.startsWith("Minecraft"))) != "[]") return this.canceled = true;
+			if(this.device.titles.filter(title => title.name.startsWith("Minecraft")).length != 0) return this.canceled = true;
 			
 			this.state = "Player is online and is not playing!";
 			this.largeImg = "mclogo";
