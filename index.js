@@ -24,8 +24,6 @@ client.on('ready', () => {
 			let lastStatus;
 			let lastGame;
 			let time;
-			let details;
-			let activity;
 			
 			const infoIntervale = setInterval(async () => {
 				if(xuid) {
@@ -36,9 +34,8 @@ client.on('ready', () => {
 						if(lastStatus != info.data.state) { lastStatus = info.data.state; time = new Date().getTime(); console.log("\x1B[33m\x1B[1mINFO | \x1B[37mState Changed to: \x1B[32m" + info.data.state + "\x1B[37m"); }
 						info.data.devices.forEach(device => {
 							device.titles.forEach(async title => {
-								if(title.activity) { activity = title.activity.richPresence; } else { if(details != "Minecraft for Android") { activity = "Loading the activity!"; } }
 								if(lastGame != title.name && title.name != "Online") { lastGame = title.name; time = new Date().getTime(); console.log("\x1B[33m\x1B[1mINFO | \x1B[37mTitle Changed to: \x1B[32m" + title.name + "\x1B[37m"); }
-								const gameInfoFunc = await new Game(title, xuid, device, activity, token).getGameInfo();
+								const gameInfoFunc = await new Game(title, xuid, device, title.activity?.richPresence, token).getGameInfo();
 								if(gameInfoFunc.canceled || gameInfoFunc == true) return;
 								
 								client.request('SET_ACTIVITY', {
