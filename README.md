@@ -17,6 +17,7 @@ How to run:
 Requirements:
 -
 > Node.js **`Any Version!`**
+> 
 > Discord Desktop Client **`The Web client doesn't work!`**
 
 Screenshots:
