@@ -45,12 +45,12 @@ class Game {
 				this.largeImg = "mclogo";
 				this.largeText = this.details;
 				this.smallImg = "mcpreview";
-				this.smallText = "Currently Playing";
+				this.smallText = "Playing in a World/Server";
 			} else if(this.activity && this.activity.startsWith("Playing on")) {
 				this.largeImg = "mclogo";
 				this.largeText = this.details;
 				this.smallImg = "netherportal";
-				this.smallText = "Currently Playing on Minecraft Realms";
+				this.smallText = "Playing on a Realm";
 			} else {
 				this.largeImg = "mclogo";
 				this.largeText = this.details;
@@ -64,14 +64,29 @@ class Game {
 				this.largeImg = "mcxboxlogo";
 				this.largeText = this.details;
 				this.smallImg = "mcpreview";
-				this.smallText = "Currently Playing";
+				this.smallText = "Playing in a World/Server";
 			} else if(this.activity && this.activity.startsWith("Playing on")) {
 				this.largeImg = "mcxboxlogo";
 				this.largeText = this.details;
 				this.smallImg = "netherportal";
-				this.smallText = "Currently Playing on Minecraft Realms";
+				this.smallText = "Playing on a Realm";
 			} else {
 				this.largeImg = "mcxboxlogo";
+				this.largeText = this.details;
+			}
+		} else if(this.title.id == 2044456598) {
+			if(this.activity && this.activity.startsWith("Playing in")) {
+				this.largeImg = "mcps4logo";
+				this.largeText = this.details;
+				this.smallImg = "mcpreview";
+				this.smallText = "Playing in a World/Server";
+			} else if(this.activity && this.activity.startsWith("Playing on")) {
+				this.largeImg = "mcps4logo";
+				this.largeText = this.details;
+				this.smallImg = "netherportal";
+				this.smallText = "Playing on a Realm";
+			} else {
+				this.largeImg = "mcps4logo";
 				this.largeText = this.details;
 			}
 		} else if(this.title.id == 1794566092) {
@@ -87,12 +102,12 @@ class Game {
 				this.largeImg = "mcpreviewlogo";
 				this.largeText = this.details;
 				this.smallImg = "mcpreview";
-				this.smallText = "Currently Playing";
+				this.smallText = "Playing in a World/Server";
 			} else if(this.activity && this.activity.startsWith("Playing on")) {
 				this.largeImg = "mcpreviewlogo";
 				this.largeText = this.details;
 				this.smallImg = "netherportal";
-				this.smallText = "Currently Playing on Minecraft Realms";
+				this.smallText = "Playing on a Realm";
 			} else {
 				this.largeImg = "mcpreviewlogo";
 				this.largeText = this.details;
