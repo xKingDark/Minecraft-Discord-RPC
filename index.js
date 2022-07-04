@@ -1,15 +1,12 @@
-const rpc = require("discord-rpc")
-const client = new rpc.Client({ transport: 'ipc' })
+const client = new (require("discord-rpc")).Client({ transport: 'ipc' })
 const axios = require('axios');
-const { xbl } = require('@xboxreplay/xboxlive-auth');
-const { Authflow } = require('prismarine-auth');
 const { Game } = require('./modules/rpc.js');
 const { gamertag } = require('./config.json');
 
 let flow;
 let token;
 
-flow = new Authflow('', `\auth`, { relyingParty: 'http://xboxlive.com'}).getXboxToken().then((xbl)=>{
+flow = new (require('prismarine-auth')).Authflow('', `\auth`, { relyingParty: 'http://xboxlive.com'}).getXboxToken().then((xbl)=>{
     token = `XBL3.0 x=${xbl.userHash};${xbl.XSTSToken}`;
 });
 
@@ -25,7 +22,7 @@ client.on('ready', () => {
 			let lastGame;
 			let time;
 			
-			const infoIntervale = setInterval(async () => {
+			const infoInterval = setInterval(async () => {
 				if(xuid) {
 					const info = await axios({ method: "GET", url: "https://userpresence.xboxlive.com/users/xuid(" + xuid + ")?level=all", headers:{ 'x-xbl-contract-version': '2', 'Authorization': token, "Accept-Language": "en-US" }}).catch(e => {});
 					if(!info) return;
