@@ -36,7 +36,7 @@ client.on('ready', () => {
 							device.titles.forEach(async title => {
 								if(lastGame != title.name && title.name != "Online") { lastGame = title.name; time = new Date().getTime(); console.log("\x1B[33m\x1B[1mINFO | \x1B[37mTitle Changed to: \x1B[32m" + title.name + "\x1B[37m"); }
 								const gameInfoFunc = await new Game(title, xuid, device, title.activity?.richPresence, token).getGameInfo();
-								if(gameInfoFunc.canceled || gameInfoFunc == true) return;
+								if(gameInfoFunc.canceled) return;
 								
 								client.request('SET_ACTIVITY', {
 									pid: process.pid,
